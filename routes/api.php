@@ -3,6 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UnidadController;
+use App\Http\Controllers\UserController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -21,4 +26,12 @@ Route::prefix('v1/auth')->group(function(){
     });
 
 });
+
+
+// routas CRUD api Rest
+Route::apiResource("usuario", UserController::class);
+Route::apiResource("roles", RoleController::class);
+Route::apiResource("permiso", PermisoController::class);
+Route::apiResource("persona", PersonaController::class);
+Route::apiResource("unidad", UnidadController::class);
 
