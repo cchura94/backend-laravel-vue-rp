@@ -21,18 +21,21 @@ class UserSeeder extends Seeder
         $u1->name = "admin";
         $u1->email = "admin@mail.com";
         $u1->password = bcrypt("admin54321");
+        $u1->url_perfil = "https://reqres.in/img/faces/8-image.jpg";
         $u1->save();
 
         $u2 = new User();
         $u2->name = "gerente";
         $u2->email = "gerente@mail.com";
         $u2->password = bcrypt("gerente54321");
+        $u2->url_perfil = "https://reqres.in/img/faces/9-image.jpg";
         $u2->save();
 
         $u3 = new User();
         $u3->name = "user";
         $u3->email = "user@mail.com";
         $u3->password = bcrypt("user54321");
+        $u3->url_perfil = "https://reqres.in/img/faces/10-image.jpg";
         $u3->save();
 
         // Roles
