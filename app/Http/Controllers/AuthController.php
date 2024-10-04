@@ -51,7 +51,25 @@ class AuthController extends Controller
     }
 
     public function funPerfil(Request $request){
-        $usuario = $request->user();
+        // $usuario = Auth::user();
+        $usuario = User::with('roles')->find(Auth::id());
+
+        $array_permisos = [];
+        if(count($usuario->roles) > 0){
+            $array_permisos = $usuario->roles()
+                                        ->with('permisos')
+                                        ->get()
+                                        ->pluck('permisos')
+                                        ->flatten()
+                                        ->map(function($permiso){
+                                            return array('action' => $permiso->action, 'subject' => $permiso->subject, 'name' => $permiso->name);
+                                        })
+                                        ->unique();
+        }
+
+        $usuario->permisos = $array_permisos;      
+
+       //  $usuario = $request->user();
 
         return response()->json($usuario, 200);
     }

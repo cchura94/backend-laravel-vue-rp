@@ -54,5 +54,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
+    public function permisos(){
+        return $this->roles->map->permisos->flatten()->pluck("permiso")->unique();
+    }
     
 }

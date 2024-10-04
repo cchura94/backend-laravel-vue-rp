@@ -27,11 +27,15 @@ Route::prefix('v1/auth')->group(function(){
 
 });
 
+Route::middleware('auth:sanctum')->group(function(){
+    // routas CRUD api Rest
+    Route::apiResource("usuario", UserController::class);
+    Route::apiResource("roles", RoleController::class);
+    Route::apiResource("permiso", PermisoController::class);
+    Route::apiResource("persona", PersonaController::class);
+    Route::apiResource("unidad", UnidadController::class);
+});
 
-// routas CRUD api Rest
-Route::apiResource("usuario", UserController::class);
-Route::apiResource("roles", RoleController::class);
-Route::apiResource("permiso", PermisoController::class);
-Route::apiResource("persona", PersonaController::class);
-Route::apiResource("unidad", UnidadController::class);
-
+Route::get("/no-autorizado", function(){
+    return ["mensaje" => "No Autorizado"];
+})->name("login");

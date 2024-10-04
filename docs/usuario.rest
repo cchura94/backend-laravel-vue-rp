@@ -1,4 +1,39 @@
 ### Listado de Usuarios
 GET http://127.0.0.1:8000/api/usuario
+Authorization: Bearer 14|tq25cBvg3EXuWtxKMtvu5OXVGWFZ3OblvmM7ht8Me4ad5f4c
 
 ### Guardar Usuarios
+POST http://127.0.0.1:8000/api/usuario
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 14|tq25cBvg3EXuWtxKMtvu5OXVGWFZ3OblvmM7ht8Me4ad5f4c
+
+{
+    "name": "david",
+    "email": "david@mail.com",
+    "password": "pedro54321"
+}
+
+### Mostrar Usuario
+GET http://127.0.0.1:8000/api/usuario/5
+Accept: application/json
+Authorization: Bearer 14|tq25cBvg3EXuWtxKMtvu5OXVGWFZ3OblvmM7ht8Me4ad5f4c
+
+### Modificar Usuario
+PUT http://127.0.0.1:8000/api/usuario/5
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 14|tq25cBvg3EXuWtxKMtvu5OXVGWFZ3OblvmM7ht8Me4ad5f4c
+
+{
+    "name": "pedro MODIFICADO",
+    "email": "pedro.modificado@mail.com",
+    "password": "pedro54321"
+}
+
+### eliminar
+DELETE http://127.0.0.1:8000/api/usuario/7
+Accept: application/json
+Authorization: Bearer 14|tq25cBvg3EXuWtxKMtvu5OXVGWFZ3OblvmM7ht8Me4ad5f4c
+
+

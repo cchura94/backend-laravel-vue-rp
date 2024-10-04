@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -13,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::orderBy('id', 'desc')->paginate(20);
+        Gate::authorize('index_user');
+
+        $usuarios = User::with(['persona', 'roles'])->orderBy('id', 'desc')->paginate(20);
         // $usuarios2 = DB::select("Select * from users");
 
         return response()->json($usuarios, 200);
@@ -24,7 +28,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create_user');
+
+        $request->validate([
+            "name" => "required|string",
+            "email" => "required|email|unique:users",
+            "password" => "required"
+        ]);
+
+        $usuario = new User();
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
+        $usuario->password = Hash::make($request->password);
+        $usuario->save();
+
+        return response()->json(["mensaje" => "Usuario registrado"]);
     }
 
     /**
@@ -32,6 +50,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
+        Gate::authorize('show_user');
+
         $user = User::findOrFail($id);
 
         return response()->json($user, 200);
@@ -42,7 +62,23 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Gate::authorize('edit_user');
+
+        $request->validate([
+            "name" => "required|string",
+            "email" => "required|email|unique:users,email,$id",
+            "password" => "required"
+        ]);
+
+        $usuario = User::find($id);
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
+        $usuario->password = Hash::make($request->password);
+        $usuario->update();
+
+        return response()->json(["mensaje" => "Usuario modificado"]);
+   
+
     }
 
     /**
@@ -50,6 +86,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Gate::authorize('delete_user');
+
+        $usuario = User::find($id);
+        $usuario->delete();
+
+        return response()->json(["mensaje" => "Usuario eliminado"]);
+
     }
 }
