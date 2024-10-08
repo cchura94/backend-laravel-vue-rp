@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permiso;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::get();
+        $roles = Role::with('permisos')->get();
+        $permisos = Permiso::get();
         
-        return response()->json($roles);
+        return response()->json(["roles" => $roles, "permisos" => $permisos]);
     }
 
     /**
@@ -47,5 +49,21 @@ class RoleController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function actualizarPermisos($id, Request $request){
+        $role = Role::find($id);
+
+ 
+
+        $role->permisos()->sync([]);
+
+        foreach ($request["permisos"] as $permiso) {
+          
+            $role->permisos()->attach($permiso['id']);
+        }
+
+        return response()->json(["mensaje" => "Permisos Actualizados"]);
+        
     }
 }

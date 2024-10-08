@@ -28,6 +28,10 @@ Route::prefix('v1/auth')->group(function(){
 });
 
 Route::middleware('auth:sanctum')->group(function(){
+
+    // actualizar permisos
+    Route::put('/roles/{id}/permisos', [RoleController::class, "actualizarPermisos"]);
+
     // routas CRUD api Rest
     Route::apiResource("usuario", UserController::class);
     Route::apiResource("roles", RoleController::class);
