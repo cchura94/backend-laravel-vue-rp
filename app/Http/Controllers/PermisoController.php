@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permiso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PermisoController extends Controller
 {
@@ -11,7 +13,12 @@ class PermisoController extends Controller
      */
     public function index()
     {
-        //
+        Gate::authorize('index_permiso');
+
+        
+        $permisos = Permiso::get();
+        
+        return response()->json($permisos, 200);
     }
 
     /**
@@ -19,7 +26,17 @@ class PermisoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create_permiso');
+
+        $permiso = new Permiso();
+        $permiso->name = $request->name;
+        $permiso->action = $request->action;
+        $permiso->subject = $request->subject;
+        $permiso->permiso = $request->permiso;
+        $permiso->descripcion = $request->descripcion;
+        $permiso->save();
+
+        return response()->json(["mensaje" => "Permiso Registrado"]);
     }
 
     /**
@@ -27,7 +44,12 @@ class PermisoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        Gate::authorize('show_permiso');
+
+        $permiso = Permiso::find($id);
+
+        return response()->json($permiso);
+
     }
 
     /**
@@ -35,7 +57,19 @@ class PermisoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Gate::authorize('edit_permiso');
+
+
+        $permiso = Permiso::find($id);
+        $permiso->name = $request->name;
+        $permiso->action = $request->action;
+        $permiso->subject = $request->subject;
+        $permiso->permiso = $request->permiso;
+        $permiso->descripcion = $request->descripcion;
+        $permiso->update();
+
+        return response()->json(["mensaje" => "Permiso Actualizado"]);
+   
     }
 
     /**
@@ -43,6 +77,7 @@ class PermisoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Gate::authorize('delete_permiso');
+
     }
 }

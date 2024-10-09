@@ -31,6 +31,9 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // actualizar permisos
     Route::put('/roles/{id}/permisos', [RoleController::class, "actualizarPermisos"]);
+    Route::post('/usuario/{id}/asignar-roles', [UserController::class, "actualizarRoles"]);
+
+    
 
     // routas CRUD api Rest
     Route::apiResource("usuario", UserController::class);

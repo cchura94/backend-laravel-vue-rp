@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Permiso;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -13,6 +14,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        Gate::authorize('index_role');
+
         $roles = Role::with('permisos')->get();
         $permisos = Permiso::get();
         
@@ -24,7 +27,15 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create_role');
+
+        $role = new Role();
+        $role->name = $request->name;
+        $role->detalle = $request->detalle;
+        $role->save();
+
+        return response()->json(["mensaje" => "EL rol se ha registrado..."]);
+
     }
 
     /**
@@ -32,7 +43,11 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        Gate::authorize('show_role');
+
+        $role = Role::find($id);
+
+        return response()->json($role);
     }
 
     /**
@@ -40,7 +55,16 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Gate::authorize('edit_role');
+
+
+        $role = Role::find($id);
+        $role->name = $request->name;
+        $role->detalle = $request->detalle;
+        $role->update();
+
+        return response()->json(["mensaje" => "EL rol se ha actualizado..."]);
+
     }
 
     /**

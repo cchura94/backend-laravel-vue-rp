@@ -94,4 +94,12 @@ class UserController extends Controller
         return response()->json(["mensaje" => "Usuario eliminado"]);
 
     }
+
+    public function actualizarRoles($id, Request $request){
+        $usuario = User::find($id);
+        $usuario->roles()->sync($request["roles_id"]);
+
+        return response()->json(["mensaje" => "Roles actualizados"]);
+
+    }
 }

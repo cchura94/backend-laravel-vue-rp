@@ -1,1 +1,31 @@
+### listar roles
 GET http://127.0.0.1:8000/api/roles
+Authorization: Bearer 5|Xv9t9QT8cyacau2zffYRHulUS11NhtrftXCgzo9z52d194a5
+
+
+### Guardar ROl
+POST http://127.0.0.1:8000/api/roles
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 5|Xv9t9QT8cyacau2zffYRHulUS11NhtrftXCgzo9z52d194a5
+
+{
+    "name": "PROVEEDOR",
+    "detalle": ""
+}
+
+### Mostrar Rol:
+GET http://127.0.0.1:8000/api/roles/2
+Authorization: Bearer 5|Xv9t9QT8cyacau2zffYRHulUS11NhtrftXCgzo9z52d194a5
+
+### modificar Role
+PUT http://127.0.0.1:8000/api/roles/2
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 5|Xv9t9QT8cyacau2zffYRHulUS11NhtrftXCgzo9z52d194a5
+
+{
+  "name": "ADMIN",
+  "detalle": "administrador de sistema"
+}
+

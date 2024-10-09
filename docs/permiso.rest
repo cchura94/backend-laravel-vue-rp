@@ -1,0 +1,21 @@
+GET http://127.0.0.1:8000/api/permiso
+Authorization: Bearer 5|Xv9t9QT8cyacau2zffYRHulUS11NhtrftXCgzo9z52d194a5
+
+###
+
+POST http://127.0.0.1:8000/api/permiso
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 5|Xv9t9QT8cyacau2zffYRHulUS11NhtrftXCgzo9z52d194a5
+
+{
+    "name": "Listar Roles",
+    "action": "index",
+    "subject": "role",
+    "permiso": "index_role",
+    "descripcion": "Listado de roles"
+  }
+
+### mostrar
+GET http://127.0.0.1:8000/api/permiso/6
+Authorization: Bearer 5|Xv9t9QT8cyacau2zffYRHulUS11NhtrftXCgzo9z52d194a5
