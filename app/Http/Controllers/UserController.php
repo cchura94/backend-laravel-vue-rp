@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -101,5 +102,14 @@ class UserController extends Controller
 
         return response()->json(["mensaje" => "Roles actualizados"]);
 
+    }
+
+    public function reportePDFUsuarios(Request $request){
+
+        $usuarios = User::get();
+
+        $pdf = Pdf::loadView('pdf.usuarios', ["usuarios" => $usuarios]);
+        // return $pdf->download('usuarios.pdf');
+        return $pdf->stream("lista_usuarios.pdf");
     }
 }

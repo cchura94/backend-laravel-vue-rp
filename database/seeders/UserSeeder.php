@@ -17,6 +17,13 @@ class UserSeeder extends Seeder
     {
         // usuarios
 
+        $u0 = new User();
+        $u0->name = "superadmin";
+        $u0->email = "superadmin@mail.com";
+        $u0->password = bcrypt("superadmin54321");
+        $u0->url_perfil = "https://reqres.in/img/faces/7-image.jpg";
+        $u0->save();
+
         $u1 = new User();
         $u1->name = "admin";
         $u1->email = "admin@mail.com";
@@ -56,6 +63,7 @@ class UserSeeder extends Seeder
         $r3->save();
 
         // asignando roles a los usuarios
+        $u0->roles()->attach($r0->id);
         $u1->roles()->attach($r1->id);
         $u2->roles()->attach([$r2->id, $r3->id]);
         $u3->roles()->attach($r3->id);

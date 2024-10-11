@@ -27,6 +27,9 @@ Route::prefix('v1/auth')->group(function(){
 
 });
 
+Route::get("/usuario/reporte-pdf", [UserController::class, "reportePDFUsuarios"]);
+
+
 Route::middleware('auth:sanctum')->group(function(){
 
     // actualizar permisos
@@ -42,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource("persona", PersonaController::class);
     Route::apiResource("unidad", UnidadController::class);
 });
+
 
 Route::get("/no-autorizado", function(){
     return ["mensaje" => "No Autorizado"];
