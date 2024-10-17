@@ -36,7 +36,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/roles/{id}/permisos', [RoleController::class, "actualizarPermisos"]);
     Route::post('/usuario/{id}/asignar-roles', [UserController::class, "actualizarRoles"]);
 
-    
+    // asignar Datos Personales a User
+    Route::post("/usuario/{id}/asignar-datos-personales", [UserController::class, "asignarDatosPersonales"]);    
 
     // routas CRUD api Rest
     Route::apiResource("usuario", UserController::class);

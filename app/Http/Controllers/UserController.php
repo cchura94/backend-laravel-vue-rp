@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Persona;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -111,5 +112,27 @@ class UserController extends Controller
         $pdf = Pdf::loadView('pdf.usuarios', ["usuarios" => $usuarios]);
         // return $pdf->download('usuarios.pdf');
         return $pdf->stream("lista_usuarios.pdf");
+    }
+
+    public function asignarDatosPersonales($id, Request $request){
+        $request->validate([
+            "nombres" => "required",
+            "unidad_id" => "required"
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $persona = new Persona();
+        $persona->nombres = $request->nombres;
+        $persona->apellidos = $request->apellidos;
+        $persona->ci = $request->ci;
+        $persona->direccion = $request->direccion;
+        $persona->telefono = $request->telefono;
+        $persona->unidad_id = $request->unidad_id;
+        $persona->user_id = $user->id;
+        $persona->save();
+        
+
+        return response()->json(["mensaje" => "Datos Personales actualizados"], 201);
     }
 }

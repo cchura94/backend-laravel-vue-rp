@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Unidad;
 use Illuminate\Http\Request;
 
 class UnidadController extends Controller
@@ -11,7 +12,9 @@ class UnidadController extends Controller
      */
     public function index()
     {
-        //
+         $unidades= Unidad::get();
+
+         return response()->json($unidades, 200);
     }
 
     /**
@@ -19,7 +22,18 @@ class UnidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "nombre" => "required",
+            "seccion" => "required",
+        ]);
+
+        $unidad = new Unidad();
+        $unidad->nombre = $request->nombre;
+        $unidad->seccion = $request->seccion;
+        $unidad->descripcion = $request->descripcion;
+        $unidad->save();
+
+        return response()->json(["mensaje" => "unidad registrado"], 200);
     }
 
     /**

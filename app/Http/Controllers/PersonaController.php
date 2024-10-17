@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Persona;
 use Illuminate\Http\Request;
 
 class PersonaController extends Controller
@@ -19,7 +20,7 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -35,7 +36,17 @@ class PersonaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $persona = Persona::find($id);
+        $persona->nombres = $request->nombres;
+        $persona->apellidos = $request->apellidos;
+        $persona->ci = $request->ci;
+        $persona->direccion = $request->direccion;
+        $persona->telefono = $request->telefono;
+        $persona->unidad_id = $request->unidad_id;
+        $persona->user_id = $request->user_id;
+        $persona->update();
+
+        return response()->json(["mensaje" => "Datos personales actualizado"], 201);
     }
 
     /**
